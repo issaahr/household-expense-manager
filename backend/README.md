@@ -2,6 +2,14 @@
 
 API REST desenvolvida em ASP.NET Core 10 utilizando Entity Framework Core e PostgreSQL.
 
+<p align="center">
+  <img src="https://img.shields.io/badge/.NET%2010-512BD4?logo=dotnet&logoColor=white" />
+  <img src="https://img.shields.io/badge/C%23-239120?logo=csharp&logoColor=white" />
+  <img src="https://img.shields.io/badge/Entity%20Framework%20Core-512BD4?logo=dotnet&logoColor=white" />
+  <img src="https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=white" />
+  <img src="https://img.shields.io/badge/xUnit-5C2D91?logo=.net&logoColor=white" />
+</p>
+
 ## Estrutura
 
 ```text
@@ -31,7 +39,7 @@ O projeto segue uma arquitetura em camadas.
 - Data contém o contexto do Entity Framework e os mapeamentos.
 - DTOs representam contratos de entrada e saída.
 - Rules encapsulam regras reutilizáveis que não dependem de infraestrutura.
-- Exceptions define exceções específicas da aplicação.
+- Exceptions definem exceções específicas da aplicação.
 
 ## Executando sem Docker
 
