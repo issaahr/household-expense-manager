@@ -6,17 +6,28 @@ API REST construída em ASP.NET Core 10 com Entity Framework Core e PostgreSQL.
 
 ```text
 backend/
-├── Entities/                  # Classes de domínio (POCOs, sem lógica de negócio)
-├── Enums/                     # Enums do domínio (ex: TransactionType)
-├── Services/                  # Regras de negócio e orquestração de dados
-├── Data/
-│   ├── AppDbContext.cs        # Contexto do EF Core
-│   ├── Configurations/        # Mapeamento entidade → tabela (Fluent API)
-│   └── DevelopmentDatabaseSeeder.cs
-├── Migrations/                # Migrations geradas pelo EF Core
-├── appsettings.json
-├── appsettings.Development.json
-└── Program.cs
+├── Dockerfile
+├── README.md
+├── src/
+│   ├── Controllers/                # Endpoints da API
+│   ├── Data/
+│   │   ├── AppDbContext.cs         # Contexto do EF Core
+│   │   ├── Configurations/         # Mapeamento entidade → tabela (Fluent API)
+│   │   └── DevelopmentDatabaseSeeder.cs
+│   ├── DTOs/                       # Objetos de transferência (request/response)
+│   ├── Entities/                   # Classes de domínio
+│   ├── Enums/                      # Enums do domínio
+│   ├── Migrations/                 # Migrations geradas pelo EF Core
+│   ├── Properties/
+│   ├── Services/                   # Regras de negócio e orquestração de dados
+│   ├── Validators/                 # Validação de entrada (ex: FluentValidation)
+│   ├── appsettings.json
+│   ├── appsettings.Development.json
+│   ├── HouseholdExpenseManager.Api.csproj
+│   └── Program.cs
+└── tests/
+    └── HouseholdExpenseManager.Api.Tests/
+        └── HouseholdExpenseManager.Api.Tests.csproj
 ```
 
 ### Padrão de entidades
