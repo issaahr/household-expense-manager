@@ -43,6 +43,20 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<IPersonService, PersonService>();
 builder.Services.AddScoped<ITransactionService, TransactionService>();
 
+// CORS liberado para o frontend durante desenvolvimento.
+// Como a aplicação não possui autenticação, uma política restritiva não é necessária neste momento.
+// Em um ambiente fora de desenvolvimento, restringir para domínios conhecidos.
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("Frontend", policy =>
+    {
+        policy
+            .AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
 // Monitoramento
 builder.Services.AddHealthChecks()
     .AddDbContextCheck<AppDbContext>();
@@ -66,7 +80,7 @@ app.UseMiddleware<ExceptionMiddleware>();
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.UseHttpsRedirection();
+app.UseCors("Frontend");
 
 app.MapControllers();
 
