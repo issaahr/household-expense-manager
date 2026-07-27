@@ -1,7 +1,7 @@
-using Xunit;
+using FluentValidation.Results;
 using HouseholdExpenseManager.Api.DTOs.Person.Request;
 using HouseholdExpenseManager.Api.Validators.Person;
-using FluentValidation.Results;
+using Xunit;
 
 namespace HouseholdExpenseManager.Api.Tests.Validators.Person;
 
@@ -13,6 +13,7 @@ public class CreatePersonRequestValidatorTests
     [Fact]
     public void Should_Pass_When_Request_Is_Valid()
     {
+        // Arrange
         CreatePersonRequest request = new()
         {
             Name = "Maria Silva",
@@ -20,9 +21,12 @@ public class CreatePersonRequestValidatorTests
         };
 
 
-        ValidationResult result = validator.Validate(request);
+        // Act
+        ValidationResult result =
+            validator.Validate(request);
 
 
+        // Assert
         Assert.True(result.IsValid);
     }
 
@@ -30,6 +34,7 @@ public class CreatePersonRequestValidatorTests
     [Fact]
     public void Should_Fail_When_Name_Is_Empty()
     {
+        // Arrange
         CreatePersonRequest request = new()
         {
             Name = "",
@@ -37,9 +42,12 @@ public class CreatePersonRequestValidatorTests
         };
 
 
-        ValidationResult result = validator.Validate(request);
+        // Act
+        ValidationResult result =
+            validator.Validate(request);
 
 
+        // Assert
         Assert.Contains(
             result.Errors,
             error => error.PropertyName == nameof(request.Name)
@@ -50,6 +58,7 @@ public class CreatePersonRequestValidatorTests
     [Fact]
     public void Should_Fail_When_Name_Is_Too_Short()
     {
+        // Arrange
         CreatePersonRequest request = new()
         {
             Name = "A",
@@ -57,9 +66,12 @@ public class CreatePersonRequestValidatorTests
         };
 
 
-        ValidationResult result = validator.Validate(request);
+        // Act
+        ValidationResult result =
+            validator.Validate(request);
 
 
+        // Assert
         Assert.Contains(
             result.Errors,
             error => error.PropertyName == nameof(request.Name)
@@ -70,6 +82,7 @@ public class CreatePersonRequestValidatorTests
     [Fact]
     public void Should_Fail_When_BirthDate_Is_In_Future()
     {
+        // Arrange
         CreatePersonRequest request = new()
         {
             Name = "Maria Silva",
@@ -80,9 +93,12 @@ public class CreatePersonRequestValidatorTests
         };
 
 
-        ValidationResult result = validator.Validate(request);
+        // Act
+        ValidationResult result =
+            validator.Validate(request);
 
 
+        // Assert
         Assert.Contains(
             result.Errors,
             error => error.PropertyName == nameof(request.BirthDate)

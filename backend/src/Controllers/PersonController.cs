@@ -33,7 +33,6 @@ public sealed class PersonController(IPersonService service) : ControllerBase
         );
     }
 
-
     /// <summary>
     /// Retorna todas as pessoas cadastradas.
     /// </summary>
@@ -48,7 +47,6 @@ public sealed class PersonController(IPersonService service) : ControllerBase
 
         return Ok(response);
     }
-
 
     /// <summary>
     /// Remove uma pessoa pelo identificador.
