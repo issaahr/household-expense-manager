@@ -1,22 +1,43 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
+
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
+    <UserSecretsId>household-expense-manager-api</UserSecretsId>
+
+    <!-- Habilita análise de referência nula -->
     <Nullable>enable</Nullable>
+
+    <!-- Importa automaticamente namespaces comuns -->
     <ImplicitUsings>enable</ImplicitUsings>
+
+    <!-- Trata avisos de análise como erro no build -->
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+
+    <!-- Habilita regras de estilo do editorconfig no build -->
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Remove="tests\**\*.cs" />
+    <Content Remove="tests\**" />
+    <EmbeddedResource Remove="tests\**" />
+    <None Remove="tests\**" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.0" />
+
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+
     <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="10.0.0" />
+
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.0" />
+
     <PackageReference Include="Swashbuckle.AspNetCore" Version="10.2.3" />
   </ItemGroup>
+
 </Project>

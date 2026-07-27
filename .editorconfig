@@ -1,0 +1,76 @@
+root = true
+
+########################################
+# Geral
+########################################
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+
+########################################
+# C#
+########################################
+
+[*.cs]
+
+indent_style = space
+indent_size = 4
+
+# Usings organizados
+dotnet_sort_system_directives_first = true
+
+# Namespace moderno
+csharp_style_namespace_declarations = file_scoped:suggestion
+
+# Preferir var quando o tipo é óbvio
+csharp_style_var_when_type_is_apparent = true:suggestion
+csharp_style_var_elsewhere = false:suggestion
+csharp_style_var_for_built_in_types = false:suggestion
+
+# Chaves sempre em nova linha
+csharp_new_line_before_open_brace = all
+
+# Expressões lambda
+csharp_style_expression_bodied_methods = false:suggestion
+csharp_style_expression_bodied_properties = true:suggestion
+
+# Nullability
+dotnet_diagnostic.CS8600.severity = warning
+dotnet_diagnostic.CS8602.severity = warning
+
+# Não qualificar membros desnecessariamente
+dotnet_style_qualification_for_field = false:suggestion
+dotnet_style_qualification_for_property = false:suggestion
+dotnet_style_qualification_for_method = false:suggestion
+
+# Ordem dos modificadores
+csharp_preferred_modifier_order = public,private,protected,internal,static,readonly,abstract,virtual,override,sealed,extern,new,unsafe,volatile,async:suggestion
+
+
+########################################
+# TypeScript / React
+########################################
+
+[*.{ts,tsx}]
+
+indent_style = space
+indent_size = 2
+
+quote_type = single
+
+# Final de linha
+insert_final_newline = true
+
+
+########################################
+# JSON
+########################################
+
+[*.json]
+
+indent_style = space
+indent_size = 2

@@ -1,37 +1,40 @@
 using HouseholdExpenseManager.Api.Data;
 using Microsoft.EntityFrameworkCore;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-    ?? throw new InvalidOperationException("Connection string 'DefaultConnection' was not configured.");
+string connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+    ?? throw new InvalidOperationException(
+        "A string de conexão 'DefaultConnection' não foi configurada."
+    );
 
 builder.Services.AddControllers();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
-builder.Services.AddHealthChecks().AddDbContextCheck<AppDbContext>();
 
-var app = builder.Build();
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseNpgsql(connectionString));
 
-using (var scope = app.Services.CreateScope())
-{
-    var database = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    await database.Database.MigrateAsync();
+builder.Services.AddHealthChecks()
+    .AddDbContextCheck<AppDbContext>();
 
-    if (app.Environment.IsDevelopment())
-    {
-        await DevelopmentDatabaseSeeder.SeedAsync(database);
-    }
-}
+WebApplication app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    using IServiceScope scope = app.Services.CreateScope();
+    AppDbContext database = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+    await database.Database.MigrateAsync();
+    await DevelopmentDatabaseSeeder.SeedAsync(database);
 }
 
+app.UseSwagger();
+app.UseSwaggerUI();
+
 app.UseHttpsRedirection();
+
 app.MapControllers();
 app.MapHealthChecks("/health");
 

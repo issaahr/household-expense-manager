@@ -7,8 +7,7 @@
       "launchBrowser": false,
       "applicationUrl": "http://localhost:5080",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "ConnectionStrings__DefaultConnection": "Host=localhost;Port=5432;Database=household_expenses;Username=postgres;Password=postgres"
+        "ASPNETCORE_ENVIRONMENT": "Development"
       }
     }
   }
