@@ -1,5 +1,8 @@
 namespace HouseholdExpenseManager.Api.DTOs.Person.Response;
 
+/// <summary>
+/// Representa uma pessoa cadastrada.
+/// </summary>
 public sealed class PersonResponse
 {
     public int Id { get; init; }

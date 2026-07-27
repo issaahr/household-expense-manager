@@ -18,6 +18,9 @@
 
     <!-- Gera arquivo XML usado pelo Swagger para documentar endpoints -->
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+
+    <!-- Ignora avisos de documentação ausente em métodos públicos -->
+    <NoWarn>$(NoWarn);1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

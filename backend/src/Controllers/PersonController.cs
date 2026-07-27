@@ -62,4 +62,22 @@ public sealed class PersonController(IPersonService service) : ControllerBase
 
         return NoContent();
     }
+
+    /// <summary>
+    /// Retorna o resumo financeiro de todas as pessoas cadastradas,
+    /// incluindo receitas, despesas e saldo.
+    /// </summary>
+    /// <returns>Resumo financeiro por pessoa e total geral.</returns>
+    [HttpGet("financial-summary")]
+    [ProducesResponseType(
+        typeof(PersonFinancialSummaryResponse),
+        StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> GetFinancialSummary()
+    {
+        PersonFinancialSummaryResponse response =
+            await service.GetFinancialSummaryAsync();
+
+        return Ok(response);
+    }
 }

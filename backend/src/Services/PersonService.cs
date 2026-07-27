@@ -2,9 +2,10 @@ using HouseholdExpenseManager.Api.Data;
 using HouseholdExpenseManager.Api.DTOs.Person.Request;
 using HouseholdExpenseManager.Api.DTOs.Person.Response;
 using HouseholdExpenseManager.Api.Entities;
-using HouseholdExpenseManager.Api.Services.Interfaces;
-using HouseholdExpenseManager.Api.Rules;
+using HouseholdExpenseManager.Api.Enums;
 using HouseholdExpenseManager.Api.Exceptions;
+using HouseholdExpenseManager.Api.Rules;
+using HouseholdExpenseManager.Api.Services.Interfaces;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -51,6 +52,45 @@ public sealed class PersonService(AppDbContext context) : IPersonService
     }
 
     /// <summary>
+    /// Retorna o resumo financeiro das pessoas cadastradas,
+    /// incluindo os totais individuais e o total geral.
+    /// </summary>
+    /// <returns>Resumo financeiro das pessoas.</returns>
+    public async Task<PersonFinancialSummaryResponse> GetFinancialSummaryAsync()
+    {
+        List<PersonBalanceResponse> balances =
+            await context.People
+                .AsNoTracking()
+                .Select(person => new PersonBalanceResponse
+                {
+                    PersonId = person.Id,
+                    Name = person.Name,
+
+                    TotalIncome = person.Transactions
+                        .Where(transaction =>
+                            transaction.Type == TransactionType.Income)
+                        .Sum(transaction => transaction.Amount),
+
+                    TotalExpense = person.Transactions
+                        .Where(transaction =>
+                            transaction.Type == TransactionType.Expense)
+                        .Sum(transaction => transaction.Amount)
+                })
+                .ToListAsync();
+
+        return new PersonFinancialSummaryResponse
+        {
+            People = balances,
+
+            TotalIncome = balances.Sum(balance =>
+                balance.TotalIncome),
+
+            TotalExpense = balances.Sum(balance =>
+                balance.TotalExpense)
+        };
+    }
+
+    /// <summary>
     /// Remove uma pessoa pelo identificador.
     /// As transações relacionadas são removidas automaticamente
     /// pelo relacionamento Cascade configurado no Entity Framework.
@@ -59,7 +99,7 @@ public sealed class PersonService(AppDbContext context) : IPersonService
     public async Task DeleteAsync(int id)
     {
         Person person = await context.People
-            .FirstOrDefaultAsync(p => p.Id == id)
+            .FirstOrDefaultAsync(person => person.Id == id)
             ?? throw new NotFoundException(
                 "Pessoa não encontrada."
             );
