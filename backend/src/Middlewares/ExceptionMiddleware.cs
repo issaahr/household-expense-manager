@@ -32,6 +32,15 @@ public sealed class ExceptionMiddleware(
                 exception.Message
             );
         }
+        catch (BusinessException exception)
+        {
+            await HandleExceptionAsync(
+                context,
+                HttpStatusCode.BadRequest,
+                "Regra de negócio inválida.",
+                exception.Message
+            );
+        }
         catch (Exception exception)
         {
             logger.LogError(

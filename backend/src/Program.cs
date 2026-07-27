@@ -41,6 +41,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 // Serviços da aplicação
 builder.Services.AddScoped<IPersonService, PersonService>();
+builder.Services.AddScoped<ITransactionService, TransactionService>();
 
 // Monitoramento
 builder.Services.AddHealthChecks()
