@@ -2,7 +2,8 @@ import { AppBar, Box, Container, Tab, Tabs, Toolbar, Typography } from '@mui/mat
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 
 const ROUTES = [
-  { path: '/', label: 'Pessoas' },
+  { path: '/person', label: 'Pessoas' },
+  { path: '/transactions', label: 'Transações' },
   { path: '/summary', label: 'Sumário Financeiro' },
 ];
 

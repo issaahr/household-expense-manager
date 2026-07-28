@@ -23,3 +23,15 @@ export interface CreateTransactionRequest {
   type: TransactionType;
   personId: number;
 }
+
+/**
+ * Resposta de transação.
+ */
+export interface TransactionResponse {
+  id: number;
+  description: string;
+  amount: number;
+  type: TransactionType;
+  personId: number;
+  personName: string;
+}

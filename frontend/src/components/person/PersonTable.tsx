@@ -22,6 +22,11 @@ interface PersonTableProps {
    * Cria uma transação.
    */
   onCreateTransaction(request: CreateTransactionRequest): Promise<void>;
+
+  /**
+   * Abre a listagem de transações da pessoa.
+   */
+  onViewTransactions(id: number): void;
 }
 
 /**
@@ -29,9 +34,10 @@ interface PersonTableProps {
  *
  * Permite:
  * - excluir uma pessoa;
- * - cadastrar uma transação vinculada.
+ * - cadastrar uma transação vinculada;
+ * - visualizar as transações da pessoa.
  */
-export function PersonTable({ person, onDelete, onCreateTransaction }: PersonTableProps) {
+export function PersonTable({ person, onDelete, onCreateTransaction, onViewTransactions }: PersonTableProps) {
   const [personToDelete, setPersonToDelete] = useState<PersonResponse | null>(null);
 
   const [transactionPersonId, setTransactionPersonId] = useState<number | null>(null);
@@ -40,6 +46,9 @@ export function PersonTable({ person, onDelete, onCreateTransaction }: PersonTab
 
   const [isDeleting, setIsDeleting] = useState(false);
 
+  /**
+   * Confirma a exclusão da pessoa selecionada.
+   */
   async function handleDelete() {
     if (!personToDelete) {
       return;
@@ -78,7 +87,7 @@ export function PersonTable({ person, onDelete, onCreateTransaction }: PersonTab
 
             <TableCell>Idade</TableCell>
 
-            <TableCell align="right" width={280}>
+            <TableCell align="right" width={360}>
               Ações
             </TableCell>
           </TableRow>
@@ -96,6 +105,10 @@ export function PersonTable({ person, onDelete, onCreateTransaction }: PersonTab
 
                 <TableCell align="right">
                   <Stack direction="row" spacing={1} sx={{ justifyContent: 'flex-end' }}>
+                    <Button variant="outlined" onClick={() => onViewTransactions(person.id)}>
+                      Ver transações
+                    </Button>
+
                     <Button variant="contained" onClick={() => setTransactionPersonId(person.id)}>
                       Nova transação
                     </Button>
