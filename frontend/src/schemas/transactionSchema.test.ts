@@ -14,6 +14,28 @@ describe('transactionSchema', () => {
     expect(result.amount).toBe(150.5);
   });
 
+  it('rejeita descrição contendo apenas espaços', () => {
+    const result = transactionSchema.safeParse({
+      description: '   ',
+      amount: '10',
+      type: TransactionType.Expense,
+      personId: 1,
+    });
+
+    expect(result.success).toBe(false);
+  });
+
+  it('rejeita valor não numérico', () => {
+    const result = transactionSchema.safeParse({
+      description: 'Teste',
+      amount: 'abc',
+      type: TransactionType.Expense,
+      personId: 1,
+    });
+
+    expect(result.success).toBe(false);
+  });
+
   it('aceita valor com ponto decimal', () => {
     const result = transactionSchema.parse({
       description: 'Mercado',

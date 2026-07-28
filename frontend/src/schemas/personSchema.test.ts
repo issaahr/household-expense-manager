@@ -30,6 +30,28 @@ describe('personSchema', () => {
     expect(result.success).toBe(false);
   });
 
+  it('rejeita nome contendo apenas espaços', () => {
+    const result = personSchema.safeParse({
+      name: '   ',
+      birthDate: '1990-05-10',
+    });
+
+    expect(result.success).toBe(false);
+  });
+
+  it('aceita nome com espaços externos removendo o excesso', () => {
+    const result = personSchema.safeParse({
+      name: '  Maria Silva  ',
+      birthDate: '1990-05-10',
+    });
+
+    expect(result.success).toBe(true);
+
+    if (result.success) {
+      expect(result.data.name).toBe('Maria Silva');
+    }
+  });
+
   it('rejeita nome com mais de 150 caracteres', () => {
     const result = personSchema.safeParse({
       name: 'A'.repeat(151),
@@ -41,6 +63,7 @@ describe('personSchema', () => {
 
   it('rejeita data de nascimento no futuro', () => {
     const futureDate = new Date();
+
     futureDate.setFullYear(futureDate.getFullYear() + 1);
 
     const result = personSchema.safeParse({
@@ -53,6 +76,7 @@ describe('personSchema', () => {
 
   it('rejeita data de nascimento que implique idade superior a 150 anos', () => {
     const tooOldDate = new Date();
+
     tooOldDate.setFullYear(tooOldDate.getFullYear() - 151);
 
     const result = personSchema.safeParse({

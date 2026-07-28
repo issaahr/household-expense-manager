@@ -12,6 +12,7 @@ const MAX_AGE_YEARS = 150;
 export const personSchema = z.object({
   name: z
     .string()
+    .trim()
     .min(2, 'Nome deve possuir pelo menos 2 caracteres')
     .max(150, 'Nome deve possuir no máximo 150 caracteres'),
   birthDate: z
@@ -23,10 +24,14 @@ export const personSchema = z.object({
     .refine(
       (date) => {
         const minDate = new Date();
+
         minDate.setFullYear(minDate.getFullYear() - MAX_AGE_YEARS);
+
         return new Date(date) > minDate;
       },
-      { message: `A idade não pode ser superior a ${MAX_AGE_YEARS} anos` },
+      {
+        message: `A idade não pode ser superior a ${MAX_AGE_YEARS} anos`,
+      },
     ),
 });
 

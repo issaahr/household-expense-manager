@@ -12,6 +12,9 @@ export enum TransactionType {
 const currencyInput = z
   .string()
   .transform((value) => Number(value.replace(',', '.')))
+  .refine((value) => Number.isFinite(value), {
+    message: 'O valor da transação deve ser um número válido',
+  })
   .refine((value) => value > 0, {
     message: 'O valor da transação deve ser positivo',
   });
@@ -27,7 +30,7 @@ const currencyInput = z
 export const transactionSchema = z.object({
   description: z
     .string()
-    .min(1, 'Descrição é obrigatória')
+    .trim()
     .min(2, 'Descrição deve possuir pelo menos 2 caracteres')
     .max(500, 'Descrição deve possuir no máximo 500 caracteres'),
 
