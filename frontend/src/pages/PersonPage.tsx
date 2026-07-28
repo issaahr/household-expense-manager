@@ -1,19 +1,25 @@
+import { Stack, Typography } from '@mui/material';
+
 import { PersonForm } from '../components/person/PersonForm';
-
 import { PersonTable } from '../components/person/PersonTable';
+import { usePerson } from '../hooks/usePerson';
+import { useTransactions } from '../hooks/useTransaction';
 
-import { usePerson } from '../hooks/usePeople';
-
+/**
+ * Página responsável pelo gerenciamento de pessoas.
+ */
 export function PersonPage() {
   const { person, createPerson, deletePerson } = usePerson();
 
+  const { createTransaction } = useTransactions();
+
   return (
-    <>
-      <h1>Pessoas</h1>
+    <Stack spacing={4}>
+      <Typography variant="h4">Pessoas</Typography>
 
       <PersonForm onSubmit={createPerson} />
 
-      <PersonTable person={person} onDelete={deletePerson} />
-    </>
+      <PersonTable person={person} onDelete={deletePerson} onCreateTransaction={createTransaction} />
+    </Stack>
   );
 }

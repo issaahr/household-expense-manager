@@ -1,6 +1,5 @@
-import { api } from './api';
-
 import type { CreatePersonRequest, PersonResponse } from '../types/person';
+import { api } from './api';
 
 /**
  * Serviço responsável pelas operações relacionadas às pessoas.

@@ -1,7 +1,8 @@
-import { Button, TextField, Stack } from '@mui/material';
-import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { personSchema, type PersonFormValues } from '../../schemas/personSchema';
+import { Button, Stack, TextField } from '@mui/material';
+import { useForm } from 'react-hook-form';
+
+import { type PersonFormValues, personSchema } from '../../schemas/personSchema';
 import type { CreatePersonRequest } from '../../types/person';
 
 interface PersonFormProps {

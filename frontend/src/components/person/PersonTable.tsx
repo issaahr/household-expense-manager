@@ -1,34 +1,62 @@
+import { Alert, Button, Stack, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import { useState } from 'react';
 
-import { Alert, Button, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
-
+import type { PersonResponse } from '../../types/person';
+import type { CreateTransactionRequest } from '../../types/transaction';
 import { ConfirmDialog } from '../common/ConfirmDialog';
 import { EmptyTableRow } from '../common/EmptyTableRow';
-import type { PersonResponse } from '../../types/person';
+import { TransactionDialog } from '../transaction/TransactionDialog';
 
 interface PersonTableProps {
+  /**
+   * Pessoas cadastradas.
+   */
   person: PersonResponse[];
-  onDelete: (id: number) => Promise<void>;
+
+  /**
+   * Remove uma pessoa.
+   */
+  onDelete(id: number): Promise<void>;
+
+  /**
+   * Cria uma transação.
+   */
+  onCreateTransaction(request: CreateTransactionRequest): Promise<void>;
 }
 
 /**
- * Exibe as pessoas cadastradas e permite exclusão.
+ * Exibe a lista de pessoas cadastradas.
+ *
+ * Permite:
+ * - excluir uma pessoa;
+ * - cadastrar uma transação vinculada.
  */
-export function PersonTable({ person, onDelete }: PersonTableProps) {
-  const [selectedPersonId, setSelectedPersonId] = useState<number | null>(null);
+export function PersonTable({ person, onDelete, onCreateTransaction }: PersonTableProps) {
+  const [personToDelete, setPersonToDelete] = useState<PersonResponse | null>(null);
+
+  const [transactionPersonId, setTransactionPersonId] = useState<number | null>(null);
+
   const [deleteError, setDeleteError] = useState(false);
+
   const [isDeleting, setIsDeleting] = useState(false);
 
-  async function handleConfirmDelete() {
-    if (selectedPersonId === null) return;
+  async function handleDelete() {
+    if (!personToDelete) {
+      return;
+    }
 
     setIsDeleting(true);
+
     try {
-      await onDelete(selectedPersonId);
-      setSelectedPersonId(null);
+      await onDelete(personToDelete.id);
+
       setDeleteError(false);
+      setPersonToDelete(null);
     } catch (error) {
-      if (import.meta.env.DEV) console.error('Erro ao excluir pessoa:', error);
+      if (import.meta.env.DEV) {
+        console.error(error);
+      }
+
       setDeleteError(true);
     } finally {
       setIsDeleting(false);
@@ -38,8 +66,8 @@ export function PersonTable({ person, onDelete }: PersonTableProps) {
   return (
     <>
       {deleteError && (
-        <Alert severity="error" onClose={() => setDeleteError(false)} sx={{ mb: 2 }}>
-          Não foi possível excluir a pessoa. Tente novamente.
+        <Alert severity="error" sx={{ mb: 2 }} onClose={() => setDeleteError(false)}>
+          Não foi possível excluir a pessoa.
         </Alert>
       )}
 
@@ -47,8 +75,12 @@ export function PersonTable({ person, onDelete }: PersonTableProps) {
         <TableHead>
           <TableRow>
             <TableCell>Nome</TableCell>
+
             <TableCell>Idade</TableCell>
-            <TableCell />
+
+            <TableCell align="right" width={280}>
+              Ações
+            </TableCell>
           </TableRow>
         </TableHead>
 
@@ -59,11 +91,19 @@ export function PersonTable({ person, onDelete }: PersonTableProps) {
             person.map((person) => (
               <TableRow key={person.id}>
                 <TableCell>{person.name}</TableCell>
+
                 <TableCell>{person.age}</TableCell>
-                <TableCell>
-                  <Button color="error" variant="outlined" onClick={() => setSelectedPersonId(person.id)}>
-                    Excluir
-                  </Button>
+
+                <TableCell align="right">
+                  <Stack direction="row" spacing={1} sx={{ justifyContent: 'flex-end' }}>
+                    <Button variant="contained" onClick={() => setTransactionPersonId(person.id)}>
+                      Nova transação
+                    </Button>
+
+                    <Button color="error" variant="outlined" onClick={() => setPersonToDelete(person)}>
+                      Excluir
+                    </Button>
+                  </Stack>
                 </TableCell>
               </TableRow>
             ))
@@ -72,13 +112,22 @@ export function PersonTable({ person, onDelete }: PersonTableProps) {
       </Table>
 
       <ConfirmDialog
-        open={selectedPersonId !== null}
+        open={personToDelete !== null}
         isConfirming={isDeleting}
         title="Excluir pessoa?"
         message="Essa ação também removerá todas as transações associadas a essa pessoa."
-        onCancel={() => setSelectedPersonId(null)}
-        onConfirm={handleConfirmDelete}
+        onCancel={() => setPersonToDelete(null)}
+        onConfirm={handleDelete}
       />
+
+      {transactionPersonId !== null && (
+        <TransactionDialog
+          open
+          personId={transactionPersonId}
+          onClose={() => setTransactionPersonId(null)}
+          onSubmit={onCreateTransaction}
+        />
+      )}
     </>
   );
 }

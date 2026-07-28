@@ -1,10 +1,9 @@
-import { AppBar, Toolbar, Typography, Container, Tabs, Tab, Box } from '@mui/material';
-import { Outlet, useNavigate, useLocation } from 'react-router-dom';
+import { AppBar, Box, Container, Tab, Tabs, Toolbar, Typography } from '@mui/material';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 
 const ROUTES = [
   { path: '/', label: 'Pessoas' },
-  { path: '/transacoes', label: 'Transações' },
-  { path: '/totais', label: 'Totais' },
+  { path: '/summary', label: 'Sumário Financeiro' },
 ];
 
 /**

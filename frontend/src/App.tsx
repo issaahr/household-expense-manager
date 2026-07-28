@@ -1,10 +1,10 @@
-import { ThemeProvider, CssBaseline } from '@mui/material';
-import { Route, Routes, Navigate } from 'react-router-dom';
-import { theme } from './theme';
+import { CssBaseline, ThemeProvider } from '@mui/material';
+import { Navigate, Route, Routes } from 'react-router-dom';
+
 import { AppLayout } from './layout/AppLayout';
 import { PersonPage } from './pages/PersonPage';
 import { SummaryPage } from './pages/SummaryPage';
-import { TransactionsPage } from './pages/TransactionsPage';
+import { theme } from './theme';
 
 export function App() {
   return (
@@ -14,7 +14,6 @@ export function App() {
         <Route element={<AppLayout />}>
           <Route path="/" element={<Navigate to="/person" />} />
           <Route path="/person" element={<PersonPage />} />
-          <Route path="/transactions" element={<TransactionsPage />} />
           <Route path="/summary" element={<SummaryPage />} />
         </Route>
       </Routes>
