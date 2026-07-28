@@ -6,6 +6,7 @@ using HouseholdExpenseManager.Api.Entities;
 using HouseholdExpenseManager.Api.Exceptions;
 using HouseholdExpenseManager.Api.Rules;
 using HouseholdExpenseManager.Api.Services.Interfaces;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace HouseholdExpenseManager.Api.Services;
@@ -47,7 +48,8 @@ public sealed class TransactionService(AppDbContext context)
             Description = request.Description.Trim(),
             Amount = request.Amount,
             Type = request.Type,
-            PersonId = person.Id
+            PersonId = person.Id,
+            Person = person
         };
 
 
@@ -57,6 +59,59 @@ public sealed class TransactionService(AppDbContext context)
 
 
         return MapToResponse(transaction);
+    }
+
+
+    /// <summary>
+    /// Lista todas as transações cadastradas.
+    /// </summary>
+    /// <returns>Lista de transações cadastradas.</returns>
+    public async Task<IReadOnlyList<TransactionResponse>> GetAllAsync()
+    {
+        List<Transaction> transactions = await context.Transactions
+            .AsNoTracking()
+            .Include(transaction => transaction.Person)
+            .OrderByDescending(transaction => transaction.CreatedAt)
+            .ToListAsync();
+
+
+        return transactions
+            .Select(MapToResponse)
+            .ToList();
+    }
+
+
+    /// <summary>
+    /// Lista todas as transações vinculadas a uma pessoa específica.
+    /// </summary>
+    /// <param name="personId">Identificador da pessoa.</param>
+    /// <returns>Lista de transações da pessoa.</returns>
+    public async Task<IReadOnlyList<TransactionResponse>> GetByPersonAsync(
+        int personId)
+    {
+        bool exists = await context.People
+            .AnyAsync(person => person.Id == personId);
+
+
+        if (!exists)
+        {
+            throw new NotFoundException(
+                "Pessoa não encontrada."
+            );
+        }
+
+
+        List<Transaction> transactions = await context.Transactions
+            .AsNoTracking()
+            .Include(transaction => transaction.Person)
+            .Where(transaction => transaction.PersonId == personId)
+            .OrderByDescending(transaction => transaction.CreatedAt)
+            .ToListAsync();
+
+
+        return transactions
+            .Select(MapToResponse)
+            .ToList();
     }
 
 
@@ -72,7 +127,9 @@ public sealed class TransactionService(AppDbContext context)
             Description = transaction.Description,
             Amount = transaction.Amount,
             Type = transaction.Type,
-            PersonId = transaction.PersonId
+            PersonId = transaction.PersonId,
+            PersonName = transaction.Person.Name,
+            CreatedAt = transaction.CreatedAt
         };
     }
 }

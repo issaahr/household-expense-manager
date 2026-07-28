@@ -40,4 +40,45 @@ public sealed class TransactionController(
             response
         );
     }
+
+
+    /// <summary>
+    /// Lista todas as transações cadastradas.
+    /// </summary>
+    /// <returns>Lista de transações.</returns>
+    [HttpGet]
+    [ProducesResponseType(
+        typeof(IReadOnlyList<TransactionResponse>),
+        StatusCodes.Status200OK
+    )]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> GetAll()
+    {
+        IReadOnlyList<TransactionResponse> response =
+            await service.GetAllAsync();
+
+        return Ok(response);
+    }
+
+
+    /// <summary>
+    /// Lista todas as transações de uma pessoa específica.
+    /// </summary>
+    /// <param name="personId">Identificador da pessoa.</param>
+    /// <returns>Lista de transações vinculadas à pessoa.</returns>
+    [HttpGet("person/{personId:int}")]
+    [ProducesResponseType(
+        typeof(IReadOnlyList<TransactionResponse>),
+        StatusCodes.Status200OK
+    )]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> GetByPerson(
+        int personId)
+    {
+        IReadOnlyList<TransactionResponse> response =
+            await service.GetByPersonAsync(personId);
+
+        return Ok(response);
+    }
 }
