@@ -22,13 +22,15 @@ const mockPerson: PersonResponse[] = [
 
 describe('PersonTable', () => {
   it('renderiza estado vazio', () => {
-    render(<PersonTable person={[]} onDelete={vi.fn()} onCreateTransaction={vi.fn()} />);
+    render(<PersonTable person={[]} onDelete={vi.fn()} onCreateTransaction={vi.fn()} onViewTransactions={vi.fn()} />);
 
     expect(screen.getByText('Nenhuma pessoa cadastrada ainda.')).toBeInTheDocument();
   });
 
   it('lista pessoas', () => {
-    render(<PersonTable person={mockPerson} onDelete={vi.fn()} onCreateTransaction={vi.fn()} />);
+    render(
+      <PersonTable person={mockPerson} onDelete={vi.fn()} onCreateTransaction={vi.fn()} onViewTransactions={vi.fn()} />,
+    );
 
     expect(screen.getByText('Maria Silva')).toBeInTheDocument();
 
@@ -38,7 +40,9 @@ describe('PersonTable', () => {
   it('abre o dialog de criação de transação ao clicar em nova transação', async () => {
     const user = userEvent.setup();
 
-    render(<PersonTable person={mockPerson} onDelete={vi.fn()} onCreateTransaction={vi.fn()} />);
+    render(
+      <PersonTable person={mockPerson} onDelete={vi.fn()} onCreateTransaction={vi.fn()} onViewTransactions={vi.fn()} />,
+    );
 
     await user.click(
       screen.getAllByRole('button', {
@@ -47,6 +51,7 @@ describe('PersonTable', () => {
     );
 
     expect(screen.getByRole('dialog')).toBeInTheDocument();
+
     expect(
       screen.getByRole('heading', {
         name: 'Nova transação',
@@ -59,7 +64,14 @@ describe('PersonTable', () => {
 
     const onCreateTransaction = vi.fn().mockResolvedValue(undefined);
 
-    render(<PersonTable person={mockPerson} onDelete={vi.fn()} onCreateTransaction={onCreateTransaction} />);
+    render(
+      <PersonTable
+        person={mockPerson}
+        onDelete={vi.fn()}
+        onCreateTransaction={onCreateTransaction}
+        onViewTransactions={vi.fn()}
+      />,
+    );
 
     await user.click(
       screen.getAllByRole('button', {
@@ -83,5 +95,28 @@ describe('PersonTable', () => {
       type: 0,
       personId: 1,
     });
+  });
+
+  it('chama callback para visualizar transações da pessoa', async () => {
+    const user = userEvent.setup();
+
+    const onViewTransactions = vi.fn();
+
+    render(
+      <PersonTable
+        person={mockPerson}
+        onDelete={vi.fn()}
+        onCreateTransaction={vi.fn()}
+        onViewTransactions={onViewTransactions}
+      />,
+    );
+
+    await user.click(
+      screen.getAllByRole('button', {
+        name: 'Ver transações',
+      })[0],
+    );
+
+    expect(onViewTransactions).toHaveBeenCalledWith(1);
   });
 });
