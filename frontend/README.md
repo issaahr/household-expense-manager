@@ -36,7 +36,7 @@ O projeto segue uma organização baseada em componentes e separação de respon
 - Hooks centralizam lógica de estado e operações relacionadas aos recursos.
 - Schemas contém validações utilizando Zod.
 - Types contém contratos TypeScript utilizados pela aplicação.
-Contém contratos TypeScript utilizados pela aplicação.
+  Contém contratos TypeScript utilizados pela aplicação.
 
 ## Executando sem Docker
 

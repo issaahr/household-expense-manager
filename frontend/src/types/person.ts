@@ -3,9 +3,8 @@
  */
 export interface CreatePersonRequest {
   name: string;
-  birthDate: string;  // ISO date (yyyy-MM-dd)
+  birthDate: string; // ISO date (yyyy-MM-dd)
 }
-
 
 /**
  * Pessoa retornada pela API.

@@ -1,8 +1,8 @@
-import { Button, TextField, Stack } from "@mui/material";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { personSchema, type PersonFormValues } from "../../schemas/personSchema";
-import type { CreatePersonRequest } from "../../types/person";
+import { Button, TextField, Stack } from '@mui/material';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { personSchema, type PersonFormValues } from '../../schemas/personSchema';
+import type { CreatePersonRequest } from '../../types/person';
 
 interface PersonFormProps {
   onSubmit(data: CreatePersonRequest): Promise<void>;
@@ -28,18 +28,13 @@ export function PersonForm({ onSubmit }: PersonFormProps) {
 
   return (
     <Stack component="form" spacing={2} onSubmit={handleSubmit(submit)}>
-      <TextField
-        label="Nome"
-        {...register("name")}
-        error={!!errors.name}
-        helperText={errors.name?.message}
-      />
+      <TextField label="Nome" {...register('name')} error={!!errors.name} helperText={errors.name?.message} />
 
       <TextField
         label="Data de nascimento"
         type="date"
         slotProps={{ inputLabel: { shrink: true } }}
-        {...register("birthDate")}
+        {...register('birthDate')}
         error={!!errors.birthDate}
         helperText={errors.birthDate?.message}
       />

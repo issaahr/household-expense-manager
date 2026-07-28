@@ -33,9 +33,7 @@ describe('PersonTable', () => {
     await user.click(deleteButtons[0]);
 
     expect(screen.getByText('Excluir pessoa?')).toBeInTheDocument();
-    expect(
-      screen.getByText(/removerá todas as transações associadas/i)
-    ).toBeInTheDocument();
+    expect(screen.getByText(/removerá todas as transações associadas/i)).toBeInTheDocument();
   });
 
   it('chama onDelete com o id correto ao confirmar a exclusão', async () => {
@@ -81,16 +79,17 @@ describe('PersonTable', () => {
     await user.click(screen.getByRole('button', { name: 'Confirmar' }));
 
     await waitFor(() => {
-      expect(
-        screen.getByText('Não foi possível excluir a pessoa. Tente novamente.')
-      ).toBeInTheDocument();
+      expect(screen.getByText('Não foi possível excluir a pessoa. Tente novamente.')).toBeInTheDocument();
     });
   });
 
   it('desabilita os botões do dialog enquanto a exclusão está em andamento', async () => {
     let resolveDelete: () => void;
     const onDelete = vi.fn(
-      () => new Promise<void>((resolve) => { resolveDelete = resolve; })
+      () =>
+        new Promise<void>((resolve) => {
+          resolveDelete = resolve;
+        }),
     );
     const user = userEvent.setup();
 

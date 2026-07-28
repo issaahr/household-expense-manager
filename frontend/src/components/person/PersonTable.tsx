@@ -1,14 +1,6 @@
 import { useState } from 'react';
 
-import {
-  Alert,
-  Button,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-} from '@mui/material';
+import { Alert, Button, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 
 import { ConfirmDialog } from '../common/ConfirmDialog';
 import { EmptyTableRow } from '../common/EmptyTableRow';
@@ -69,11 +61,7 @@ export function PersonTable({ person, onDelete }: PersonTableProps) {
                 <TableCell>{person.name}</TableCell>
                 <TableCell>{person.age}</TableCell>
                 <TableCell>
-                  <Button
-                    color="error"
-                    variant="outlined"
-                    onClick={() => setSelectedPersonId(person.id)}
-                  >
+                  <Button color="error" variant="outlined" onClick={() => setSelectedPersonId(person.id)}>
                     Excluir
                   </Button>
                 </TableCell>

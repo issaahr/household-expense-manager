@@ -23,14 +23,7 @@ interface ConfirmDialogProps {
  * a ação assíncrona (ex: delete) está em andamento, evitando cliques
  * duplicados.
  */
-export function ConfirmDialog({
-  open,
-  title,
-  message,
-  isConfirming = false,
-  onConfirm,
-  onCancel,
-}: ConfirmDialogProps) {
+export function ConfirmDialog({ open, title, message, isConfirming = false, onConfirm, onCancel }: ConfirmDialogProps) {
   return (
     <Dialog open={open} onClose={isConfirming ? undefined : onCancel}>
       <DialogTitle>{title}</DialogTitle>

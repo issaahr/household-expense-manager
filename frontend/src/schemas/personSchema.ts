@@ -26,7 +26,7 @@ export const personSchema = z.object({
         minDate.setFullYear(minDate.getFullYear() - MAX_AGE_YEARS);
         return new Date(date) > minDate;
       },
-      { message: `A idade não pode ser superior a ${MAX_AGE_YEARS} anos` }
+      { message: `A idade não pode ser superior a ${MAX_AGE_YEARS} anos` },
     ),
 });
 

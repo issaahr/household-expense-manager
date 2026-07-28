@@ -1,43 +1,19 @@
-import {
-  PersonForm
-} from "../components/person/PersonForm";
+import { PersonForm } from '../components/person/PersonForm';
 
-import {
-  PersonTable
-} from "../components/person/PersonTable";
+import { PersonTable } from '../components/person/PersonTable';
 
-import {
-  usePerson
-} from "../hooks/usePeople";
-
+import { usePerson } from '../hooks/usePeople';
 
 export function PersonPage() {
-
-  const {
-    person,
-    createPerson,
-    deletePerson
-  } = usePerson();
-
+  const { person, createPerson, deletePerson } = usePerson();
 
   return (
-
     <>
-      <h1>
-        Pessoas
-      </h1>
+      <h1>Pessoas</h1>
 
+      <PersonForm onSubmit={createPerson} />
 
-      <PersonForm
-        onSubmit={createPerson}
-      />
-
-
-      <PersonTable
-        person={person}
-        onDelete={deletePerson}
-      />
-
+      <PersonTable person={person} onDelete={deletePerson} />
     </>
   );
 }
