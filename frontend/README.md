@@ -34,7 +34,7 @@ O projeto segue uma organização baseada em componentes e separação de respon
 - Components contém componentes reutilizáveis e componentes específicos de domínio.
 - Hooks centralizam lógica de estado e operações relacionadas aos recursos.
 - Services são responsáveis pela comunicação com a API.
-- Schemas contém validações utilizando Zod.
+- Schemas contêm validações utilizando Zod.
 - Types definem contratos TypeScript utilizados pela aplicação.
 - Pages representam as telas principais da aplicação.
 - Layout contém estruturas compartilhadas de composição da interface.

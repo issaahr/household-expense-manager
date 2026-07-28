@@ -92,7 +92,7 @@ Para o escopo deste projeto, UUID não oferece benefícios que justifiquem sua a
 
 Valores financeiros utilizam `decimal` no backend, evitando problemas de precisão comuns ao tipo `double`.
 
-No frontend, valores monetários são recebidos como texto nos campos de formulário para permitir entrada no formato brasileiro (`0,00`), sendo transformados e validados antes do envio para a API.
+No frontend, os campos de entrada monetária utilizam texto durante a digitação para permitir o formato brasileiro (0,00). Após validação e conversão, os valores são enviados para a API como números.
 
 ### Tipo de transação
 
