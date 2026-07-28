@@ -1,6 +1,6 @@
 # Frontend
 
-Aplicação web desenvolvida em React utilizando TypeScript e Vite.
+Aplicação web desenvolvida em React utilizando TypeScript, Vite e Material UI.
 
 <p align="center">
   <img src="https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black" />
@@ -13,15 +13,18 @@ Aplicação web desenvolvida em React utilizando TypeScript e Vite.
 ## Estrutura
 
 ```text
-src
-├── components
-├── hooks
-├── layout
-├── pages
-├── schemas
-├── services
-├── tests
-└── types
+frontend
+├── src
+│   ├── components
+│   ├── hooks
+│   ├── layout
+│   ├── pages
+│   ├── schemas
+│   ├── services
+│   ├── tests
+│   ├── types
+│   └── utils
+└── public
 ```
 
 ## Organização
@@ -29,14 +32,13 @@ src
 O projeto segue uma organização baseada em componentes e separação de responsabilidades.
 
 - Components contém componentes reutilizáveis e componentes específicos de domínio.
-- Common contém componentes compartilhados pela aplicação.
-- Person contém componentes relacionados ao gerenciamento de pessoas.
-- Pages contém as páginas principais da aplicação.
-- Services são responsáveis pela comunicação com a API.
 - Hooks centralizam lógica de estado e operações relacionadas aos recursos.
+- Services são responsáveis pela comunicação com a API.
 - Schemas contém validações utilizando Zod.
-- Types contém contratos TypeScript utilizados pela aplicação.
-  Contém contratos TypeScript utilizados pela aplicação.
+- Types definem contratos TypeScript utilizados pela aplicação.
+- Pages representam as telas principais da aplicação.
+- Layout contém estruturas compartilhadas de composição da interface.
+- Utils contém funções auxiliares reutilizáveis.
 
 ## Executando sem Docker
 
@@ -80,7 +82,7 @@ Testes:
 npm run test:run
 ```
 
-O projeto utiliza Husky e lint-staged para validações automáticas durante o fluxo de desenvolvimento.
+O projeto utiliza Husky e lint-staged para validações automáticas durante o desenvolvimento.
 
 ## Build
 

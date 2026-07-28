@@ -10,6 +10,16 @@ Essa abordagem mantém o projeto organizado e de fácil manutenção sem introdu
 
 ---
 
+## Frontend
+
+### Componentização e estado
+
+A aplicação frontend utiliza componentes React separados por domínio, hooks para centralização de lógica de estado e services para comunicação com a API.
+
+As validações dos formulários são realizadas utilizando React Hook Form integrado ao Zod.
+
+---
+
 ## Persistence
 
 ### PostgreSQL
@@ -80,7 +90,9 @@ Para o escopo deste projeto, UUID não oferece benefícios que justifiquem sua a
 
 ### Valores monetários
 
-Valores financeiros utilizam `decimal`, evitando problemas de precisão comuns ao tipo `double`.
+Valores financeiros utilizam `decimal` no backend, evitando problemas de precisão comuns ao tipo `double`.
+
+No frontend, valores monetários são recebidos como texto nos campos de formulário para permitir entrada no formato brasileiro (`0,00`), sendo transformados e validados antes do envio para a API.
 
 ### Tipo de transação
 

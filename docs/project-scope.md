@@ -46,7 +46,7 @@ Além disso, o projeto utiliza comentários XML nos principais componentes públ
 
 ## Testes
 
-Foram implementados testes unitários para as principais regras de negócio e validações da aplicação.
+Foram implementados testes unitários no backend e frontend para validar regras de negócio, validações e comportamento dos principais componentes da aplicação.
 
 O foco dos testes foi garantir o comportamento esperado das regras descritas no desafio.
 
@@ -57,6 +57,8 @@ O foco dos testes foi garantir o comportamento esperado das regras descritas no 
 Foram adicionados alguns recursos que não alteram o comportamento solicitado, mas tornam a aplicação mais próxima de um ambiente real de desenvolvimento, como:
 
 - validação utilizando FluentValidation;
+- validação de formulários no frontend utilizando React Hook Form e Zod;
+- componentes de interface utilizando Material UI;
 - middleware global para tratamento de exceções;
 - documentação via Swagger/OpenAPI;
 - Docker Compose para execução completa da aplicação;
