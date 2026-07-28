@@ -1,4 +1,4 @@
-import { TableRow, TableCell } from '@mui/material';
+import { TableCell, TableRow } from '@mui/material';
 
 interface EmptyTableRowProps {
   colSpan: number;

@@ -1,4 +1,5 @@
 import type { CreatePersonRequest, PersonResponse } from '../types/person';
+import type { PersonFinancialSummaryResponse } from '../types/summary';
 import { api } from './api';
 
 /**
@@ -28,5 +29,14 @@ export const personService = {
    */
   async remove(id: number): Promise<void> {
     await api.delete(`/api/Person/${id}`);
+  },
+
+  /**
+   * Obtém o resumo financeiro das pessoas cadastradas.
+   */
+  async getFinancialSummary(): Promise<PersonFinancialSummaryResponse> {
+    const response = await api.get<PersonFinancialSummaryResponse>('/api/Person/financial-summary');
+
+    return response.data;
   },
 };
